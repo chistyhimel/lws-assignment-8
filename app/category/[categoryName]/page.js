@@ -1,6 +1,7 @@
 import RecipeCard from "@/components/RecipeCard";
 import { getAllRecipesByCategory } from "@/db/queries";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export default async function page({ params: { categoryName } }) {
@@ -14,7 +15,9 @@ export default async function page({ params: { categoryName } }) {
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-8 justify-items-center">
           {categoryData.map((recipe, id) => (
-            <RecipeCard recipe={recipe} key={recipe.id} />
+            <Link href={`/${recipe.id}`} key={recipe.id}>
+              <RecipeCard recipe={recipe} />
+            </Link>
           ))}
           <div class="card">
             <Image
