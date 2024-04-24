@@ -20,6 +20,7 @@ export const loginUser = async (formData) => {
     credential.email = formData.get("email");
     credential.password = formData.get("password");
     const user = await getAuthUser(credential);
+
     return user;
   } catch (error) {
     throw error;

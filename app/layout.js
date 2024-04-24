@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import AuthProvider from "@/providers/AuthProvider";
 import connectMongo from "@/services/dbConnect";
 import { Poppins } from "next/font/google";
 import "./globals.css";
@@ -20,8 +21,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.variable}>
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
