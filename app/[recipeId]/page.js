@@ -1,6 +1,36 @@
+import AddFavouriteButton from "@/components/AddFavouriteButton";
 import { getRecipeById } from "@/db/queries";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import Image from "next/image";
+
+export async function generateMetadata(
+  { params: { recipeId }, searchParams },
+  parent
+) {
+  const recipe = await getRecipeById(recipeId);
+
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: recipe.name,
+    description: recipe.description,
+    openGraph: {
+      images: [
+        {
+          url: `${
+            process.env.NEXT_PUBLIC_SITE_URL
+          }/api/og?title=${encodeURIComponent(
+            recipe.name
+          )}&author=${encodeURIComponent(
+            recipe.author
+          )}&cover=${encodeURIComponent(recipe.thumbnail)}`,
+          width: 1200,
+          height: 600,
+        },
+      ],
+    },
+  };
+}
 
 export default async function Page({ params: { recipeId } }) {
   const theme = cookies().get("theme");
@@ -114,24 +144,7 @@ export default async function Page({ params: { recipeId } }) {
             </div>
 
             <div className="flex gap-4 justify-end">
-              <div className="flex gap-2 text-gray-600 cursor-pointer hover:text-[#eb4a36]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="icon icon-tabler icons-tabler-outline icon-tabler-heart"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                </svg>
-                <span>Favourite</span>
-              </div>
+              <AddFavouriteButton recipeId={recipeId} />
 
               <div className="flex gap-2 text-gray-600 cursor-pointer hover:text-[#0E79F6]">
                 <svg

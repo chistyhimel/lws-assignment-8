@@ -1,6 +1,7 @@
 "use server";
 
-import { createUser, getAuthUser } from "@/db/queries";
+import { createUser, getAuthUser, updateFavourites } from "@/db/queries";
+import { revalidatePath } from "next/cache";
 
 const { redirect } = require("next/navigation");
 
@@ -25,4 +26,13 @@ export const loginUser = async (formData) => {
   } catch (error) {
     throw error;
   }
+};
+
+export const updateUserFavorites = async (recipeId, authId) => {
+  try {
+    await updateFavourites(recipeId, authId);
+  } catch (error) {
+    throw error;
+  }
+  revalidatePath("/");
 };

@@ -16,7 +16,7 @@ export default function NavSignInOut() {
 
           <button
             className="py-2 bg-[#eb4a36] px-6 rounded-md text-white content-center"
-            onClick={() => setAuth({})}
+            onClick={() => setAuth(null)}
           >
             Logout
           </button>

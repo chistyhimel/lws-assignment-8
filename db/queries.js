@@ -53,3 +53,27 @@ export const getAuthUser = async (credentials) => {
   }
   return null;
 };
+
+export const updateFavourites = async (recipeId, userId) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const index = user.favourites.indexOf(recipeId);
+
+    if (index !== -1) {
+      user.favourites.splice(index, 1);
+    } else {
+      user.favourites.push(recipeId);
+    }
+
+    const updatedUser = await user.save();
+
+    return updatedUser;
+  } catch (error) {
+    throw error;
+  }
+};
