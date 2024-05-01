@@ -3,7 +3,7 @@ import React from "react";
 
 export default function RecipeCard({ recipe, blurredImages }) {
   const { thumbnail, name, author, rating } = recipe;
-
+  console.log(blurredImages);
   return (
     <div className="card">
       <Image
