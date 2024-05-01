@@ -7,8 +7,7 @@ const { redirect } = require("next/navigation");
 
 export const registerUser = async (formData) => {
   try {
-    const user = Object.fromEntries(formData);
-    const created = await createUser(user);
+    const created = await createUser(formData);
     redirect("/login");
   } catch (error) {
     throw error;
@@ -16,12 +15,12 @@ export const registerUser = async (formData) => {
 };
 
 export const loginUser = async (formData) => {
+  console.log(formData);
   try {
-    const credential = {};
-    credential.email = formData.get("email");
-    credential.password = formData.get("password");
-    const user = await getAuthUser(credential);
-
+    // const credential = {};
+    // credential.email = formData.get("email");
+    // credential.password = formData.get("password");
+    const user = await getAuthUser(formData);
     return user;
   } catch (error) {
     throw error;

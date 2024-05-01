@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
+import { cache } from "react";
 
 const MONGO_URI = process.env.MONGO_URI;
 const cached = {};
-async function connectMongo() {
+
+const connectMongo = cache(async () => {
   if (!MONGO_URI) {
     throw new Error(
       "Please define the MONGO_URI environment variable inside .env.local"
@@ -25,5 +27,6 @@ async function connectMongo() {
   }
 
   return cached.connection;
-}
+});
+
 export default connectMongo;

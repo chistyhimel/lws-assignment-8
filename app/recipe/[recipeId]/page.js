@@ -2,6 +2,7 @@ import AddFavouriteButton from "@/components/AddFavouriteButton";
 import { getRecipeById } from "@/db/queries";
 import { cookies, headers } from "next/headers";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata(
   { params: { recipeId }, searchParams },
@@ -33,8 +34,10 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params: { recipeId } }) {
-  const theme = cookies().get("theme");
   const recipe = await getRecipeById(recipeId);
+  if (Object.keys(recipe).length === 0) {
+    return notFound();
+  }
   const {
     name,
     category,
@@ -55,7 +58,7 @@ export default async function Page({ params: { recipeId } }) {
         <div className="grid grid-cols-12 container gap-8 justify-items-center">
           <div className="col-span-12 md:col-span-6">
             <Image
-              src={image}
+              src={`${image}?${name}`}
               alt={name}
               className="w-full h-full rounded-lg object-contain"
               width={800}
@@ -176,12 +179,14 @@ export default async function Page({ params: { recipeId } }) {
           <h3 className="font-semibold text-xl py-6">How to Make it</h3>
           <div>
             <div className="step">
-              {steps.map((step, id) => (
-                <div key={id}>
-                  <h3>Step {id + 1}</h3>
-                  <p>{step}</p>
-                </div>
-              ))}
+              {steps &&
+                steps.length &&
+                steps.map((step, id) => (
+                  <div key={id}>
+                    <h3>Step {id + 1}</h3>
+                    <p>{step}</p>
+                  </div>
+                ))}
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@ export async function GET(request) {
             src={coverUrl}
             alt=""
             tw="w-full h-full"
-            style={{}}
+            style={{ width: "100%", height: "100%" }}
             width={1200}
             height={600}
           />

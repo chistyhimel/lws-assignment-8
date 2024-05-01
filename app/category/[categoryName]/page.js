@@ -15,7 +15,7 @@ export default async function page({ params: { categoryName } }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-8 justify-items-center">
           {categoryData.map((recipe, id) => (
-            <Link href={`/${recipe.id}`} key={recipe.id}>
+            <Link href={`/recipe/${recipe.id}`} key={recipe.id}>
               <RecipeCard recipe={recipe} />
             </Link>
           ))}

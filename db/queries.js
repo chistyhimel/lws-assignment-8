@@ -18,8 +18,13 @@ export const getAllRecipes = async () => {
 
 export const getRecipeById = async (recipeId) => {
   await connectMongo();
-  const recipe = await Recipe.findById(recipeId).lean();
-  return replaceMongoIdInObject(recipe);
+  try {
+    const recipe = await Recipe.findById(recipeId).lean();
+    return replaceMongoIdInObject(recipe);
+  } catch (err) {
+    console.error("Error:", err);
+    return {};
+  }
 };
 
 export const getRecipeCategories = async () => {
@@ -40,7 +45,12 @@ export const getAllRecipesByCategory = async (category) => {
 };
 
 export const createUser = async (user) => {
+  const { email } = user;
   await connectMongo();
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw new Error("Email already exists");
+  }
   return await User.create(user);
 };
 
@@ -50,8 +60,9 @@ export const getAuthUser = async (credentials) => {
 
   if (user) {
     return replaceMongoIdInObject(user);
+  } else {
+    throw new Error("User not found. Provide valid credentials.");
   }
-  return null;
 };
 
 export const updateFavourites = async (recipeId, userId) => {
