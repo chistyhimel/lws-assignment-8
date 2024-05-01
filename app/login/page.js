@@ -45,8 +45,6 @@ export default function LoginPage() {
     }
   };
 
-  console.log(errors);
-
   return (
     <main className="">
       <section className="h-screen grid place-items-center">
