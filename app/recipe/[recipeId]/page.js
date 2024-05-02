@@ -1,6 +1,7 @@
 import AddFavouriteButton from "@/components/AddFavouriteButton";
 import ShareButton from "@/components/ShareButton";
 import { getRecipeById } from "@/db/queries";
+import { getBlurData } from "@/utils/blur-generator";
 import { cookies, headers } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -53,6 +54,7 @@ export default async function Page({ params: { recipeId } }) {
     serves,
     id,
   } = recipe;
+  const { base64 } = await getBlurData(`${image}?${name}`);
   return (
     <>
       <section>
@@ -64,6 +66,8 @@ export default async function Page({ params: { recipeId } }) {
               className="w-full h-full rounded-lg object-contain"
               width={800}
               height={600}
+              placeholder="blur"
+              blurDataURL={base64}
             />
           </div>
           <div className="col-span-12 md:col-span-6 py-8 flex flex-col justify-center">

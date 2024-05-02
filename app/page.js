@@ -2,16 +2,11 @@ import Banner from "@/components/Banner";
 import RecipeCard from "@/components/RecipeCard";
 import RecipeCategories from "@/components/RecipeCategories";
 import { getAllRecipes } from "@/db/queries";
-import { getBlurData } from "@/utils/blur-generator";
 
 import Link from "next/link";
 
 export default async function Home() {
   const recipes = await getAllRecipes();
-  const images = recipes.map((recipe) => recipe.thumbnail);
-  const blurredImages = await Promise.all(
-    images.map((img) => getBlurData(img))
-  );
 
   return (
     <>
@@ -23,10 +18,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-8 justify-items-center">
               {recipes.map((recipe, idx) => (
                 <Link href={`/recipe/${recipe.id}`} key={recipe.id}>
-                  <RecipeCard
-                    recipe={recipe}
-                    blurredImages={blurredImages[idx]}
-                  />
+                  <RecipeCard recipe={recipe} />
                 </Link>
               ))}
             </div>
