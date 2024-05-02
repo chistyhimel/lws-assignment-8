@@ -2347,7 +2347,7 @@ set-function-name@^2.0.1, set-function-name@^2.0.2:
     functions-have-names "^1.2.3"
     has-property-descriptors "^1.0.2"
 
-"sharp@>= 0.30.6":
+sharp@^0.33.3, "sharp@>= 0.30.6":
   version "0.33.3"
   resolved "https://registry.npmjs.org/sharp/-/sharp-0.33.3.tgz"
   integrity sha512-vHUeXJU1UvlO/BNwTpT0x/r53WkLUVxrmb5JTgW92fdFCFk0ispLMAeu/jPO2vjkXM1fYUi3K7/qcLF47pwM1A==
