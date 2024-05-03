@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 const schema = z.object({
@@ -35,6 +36,7 @@ export default function LoginPage() {
       if (found) {
         setAuth(found);
         router.push("/");
+        toast.success("Logged in successful!");
       }
     } catch (error) {
       if (error?.formErrors?.fieldErrors) {
@@ -78,7 +80,7 @@ export default function LoginPage() {
               type="submit"
               className={`bg-[#eb4a36] py-3 rounded-md text-white w-full mt-4 ${
                 isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-              }`} // Disable button when submitting
+              }`}
               disabled={isSubmitting}
             >
               {isSubmitting ? "Logging in..." : "Login"}

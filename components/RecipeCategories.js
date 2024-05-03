@@ -10,7 +10,7 @@ export default async function RecipeCategories() {
       <ul className="pl-2 my-6 space-y-4 text-gray-500 text-sm">
         {categories.map((category, idx) => (
           <li key={category}>
-            <Link href={`category/${category}`}>{category}</Link>
+            <Link href={`/category/${category}`}>{category}</Link>
           </li>
         ))}
         {/* 

@@ -3,6 +3,7 @@ import { updateUserFavorites } from "@/actions";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AddFavouriteButton({ recipeId }) {
   const { auth, setAuth } = useAuth();
@@ -17,13 +18,28 @@ export default function AddFavouriteButton({ recipeId }) {
 
         setIsFavourite((prevIsFavourite) => !prevIsFavourite);
 
-        setAuth((prevAuth) => {
-          const updatedFavourites = findFavourite
-            ? prevAuth.favourites?.filter((item) => item !== recipeId)
-            : [...prevAuth.favourites, recipeId];
+        if (findFavourite) {
+          // setAuth((prevAuth) => {
+          //   const updatedFavourites = findFavourite
+          //     ? prevAuth.favourites?.filter((item) => item !== recipeId)
+          //     : [...prevAuth.favourites, recipeId];
 
-          return { ...prevAuth, favourites: updatedFavourites };
-        });
+          //   return { ...prevAuth, favourites: updatedFavourites };
+          // });
+          setAuth((prevAuth) => {
+            const updatedFavourites = prevAuth.favourites?.filter(
+              (item) => item !== recipeId
+            );
+            return { ...prevAuth, favourites: updatedFavourites };
+          });
+          toast.error("Recipe remove favourite!");
+        } else {
+          setAuth((prevAuth) => {
+            const updatedFavourites = [...prevAuth.favourites, recipeId];
+            return { ...prevAuth, favourites: updatedFavourites };
+          });
+          toast.success("Recipe added to favourite!");
+        }
       } catch (error) {
         console.error("Error updating favourites:", error);
       }

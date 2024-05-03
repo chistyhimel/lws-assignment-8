@@ -5,6 +5,7 @@ import { getRecipeById } from "@/db/queries";
 import { getBlurData } from "@/utils/blur-generator";
 import { cookies, headers } from "next/headers";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -77,7 +78,14 @@ export default async function Page({ params: { recipeId } }) {
               <h2 className="font-semibold text-4xl lg:w-8/12 leading-10">
                 {name}
               </h2>
-              <p className="text-xs text-[#eb4a36] italic my-2">{category}</p>
+
+              <Link
+                className="text-xs text-[#eb4a36] italic my-2"
+                href={`/category/${category}`}
+              >
+                {category}
+              </Link>
+
               <p className="text-gray-600 text-sm my-6 leading-6">
                 {description}
               </p>

@@ -43,7 +43,7 @@ export const getAllRecipesByCategory = async (category) => {
 
   try {
     const recipes = await Recipe.find({ category }).lean();
-    console.log({ recipes, category });
+
     return replaceMongoIdInArray(recipes);
   } catch (err) {
     console.error("Error:", err);

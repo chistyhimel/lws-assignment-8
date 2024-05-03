@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar";
 import AuthProvider from "@/providers/AuthProvider";
 import connectMongo from "@/services/dbConnect";
 import { Poppins } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -36,6 +38,7 @@ export default async function RootLayout({ children }) {
           <Navbar />
           {children}
         </AuthProvider>
+        <ToastContainer />
       </body>
     </html>
   );

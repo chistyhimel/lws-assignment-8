@@ -15,7 +15,6 @@ export const registerUser = async (formData) => {
 };
 
 export const loginUser = async (formData) => {
-  console.log(formData);
   try {
     // const credential = {};
     // credential.email = formData.get("email");

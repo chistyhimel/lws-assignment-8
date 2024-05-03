@@ -13,7 +13,8 @@ export default function MovieNotFound() {
         <p className="text-2xl pl-5 text-nowrap">
           This category with name
           <strong className="text-green-300 text-3xl">
-            {decodeURIComponent(categoryName)}
+            {" "}
+            {decodeURIComponent(categoryName)}{" "}
           </strong>
           was not found!
         </p>
