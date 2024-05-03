@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ImageResponse } from "next/og";
 
 export async function GET(request) {

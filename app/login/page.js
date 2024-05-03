@@ -13,12 +13,14 @@ const schema = z.object({
 
 export default function LoginPage() {
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false); // Track submission status
   const { setAuth } = useAuth();
   const router = useRouter();
 
   const onSubmit = async (event) => {
     event.preventDefault();
     setErrors({});
+    setIsSubmitting(true);
 
     const formData = {
       email: event.target.email.value,
@@ -42,6 +44,8 @@ export default function LoginPage() {
       } else {
         console.error("Error:", error);
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -72,9 +76,12 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="bg-[#eb4a36] py-3 rounded-md text-white w-full mt-4"
+              className={`bg-[#eb4a36] py-3 rounded-md text-white w-full mt-4 ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`} // Disable button when submitting
+              disabled={isSubmitting}
             >
-              Login
+              {isSubmitting ? "Logging in..." : "Login"}
             </button>
           </form>
 

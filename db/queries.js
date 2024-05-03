@@ -40,8 +40,15 @@ export const getRecipeCategories = async () => {
 
 export const getAllRecipesByCategory = async (category) => {
   await connectMongo();
-  const recipes = await Recipe.find({ category }).lean();
-  return replaceMongoIdInArray(recipes);
+
+  try {
+    const recipes = await Recipe.find({ category }).lean();
+    console.log({ recipes, category });
+    return replaceMongoIdInArray(recipes);
+  } catch (err) {
+    console.error("Error:", err);
+    return [];
+  }
 };
 
 export const createUser = async (user) => {

@@ -4,7 +4,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { z } from "zod";
 
-// Define schema for form data validation using Zod
 const schema = z.object({
   firstName: z.string().min(3),
   lastName: z.string().min(3),
@@ -20,6 +19,7 @@ export default function RegisterPage() {
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -30,6 +30,8 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
     try {
       schema.parse(formData);
       await registerUser(formData);
@@ -41,6 +43,8 @@ export default function RegisterPage() {
       } else {
         console.error("Error:", error);
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -115,9 +119,12 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              className="bg-[#eb4a36] py-3 rounded-md text-white w-full mt-4"
+              className={`bg-[#eb4a36] py-3 rounded-md text-white w-full mt-4 ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={isSubmitting}
             >
-              Create Account
+              {isSubmitting ? "Creating Account..." : "Create Account"}
             </button>
           </form>
 

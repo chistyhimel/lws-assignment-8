@@ -13,6 +13,7 @@ export default function Navbar() {
             className="object-cover h-[40px]"
             width={123}
             height={40}
+            priority
           />
         </Link>
 
