@@ -4,6 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+export async function generateMetadata({ params: { categoryName } }, parent) {
+  return {
+    title: `Khanakhazana | ${decodeURIComponent(categoryName)}`,
+  };
+}
+
 export default async function page({ params: { categoryName } }) {
   const parsedCategoryName = decodeURIComponent(categoryName);
   const categoryData = await getAllRecipesByCategory(parsedCategoryName);
